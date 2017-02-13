@@ -1,0 +1,6 @@
+/target/
+/.settings/
+/data/
+/models/
+/.classpath
+/.project
