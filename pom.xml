@@ -22,6 +22,25 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+	<licenses>
+		<license>
+			<name>GNU General Public License, Version 3 or later</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+			<distribution>manual</distribution>
+			<comments>A free, strong copyleft license for software and other kinds of works</comments>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<email>srmq@cin.ufpe.br</email>
+			<name>Sergio Queiroz</name>
+			<url>https://github.com/srmq</url>
+			<id>srmq</id>
+		</developer>
+	</developers>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
