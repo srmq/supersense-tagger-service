@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -8,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>supersense-tagger-service</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/srmq/supersense-tagger-service</url>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -40,6 +41,28 @@
 		</developer>
 	</developers>
 
+	<repositories>
+		<repository>
+			<releases>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+			<id>srmq-maven-repo</id>
+			<name>SRMQ's development repository</name>
+			<url>https://srmq-maven-repo.appspot.com</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -62,8 +85,18 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>SupersenseTagger</groupId>
-			<artifactId>SupersenseTagger</artifactId>
+			<groupId>br.cin.ufpe.nlp</groupId>
+			<artifactId>supersense-tagger</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>br.cin.ufpe.nlp</groupId>
+			<artifactId>supersense-tagger-models</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>br.cin.ufpe.nlp</groupId>
+			<artifactId>supersense-tagger-data</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
@@ -73,16 +106,66 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>br.cin.ufpe.nlp.ssense.tagger.SuperSenseTaggerServer</mainClass>
+					<layout>ZIP</layout>
+					<excludes>
+						<exclude>
+							<groupId>br.cin.ufpe.nlp</groupId>
+							<artifactId>supersense-tagger-models</artifactId>
+						</exclude>
+						<exclude>
+							<groupId>br.cin.ufpe.nlp</groupId>
+							<artifactId>supersense-tagger-data</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<!-- configure the plugin here -->
+							<artifactItems>
+								<artifactItem>
+									<groupId>br.cin.ufpe.nlp</groupId>
+									<artifactId>supersense-tagger-models</artifactId>
+									<version>0.0.1-SNAPSHOT</version>
+									<type>jar</type>
+									<outputDirectory>${basedir}</outputDirectory>
+									<includes>**/models/*.*</includes>
+									<excludes>**/META-INF/*.*</excludes>
+								</artifactItem>
+								<artifactItem>
+									<groupId>br.cin.ufpe.nlp</groupId>
+									<artifactId>supersense-tagger-data</artifactId>
+									<version>0.0.1-SNAPSHOT</version>
+									<type>jar</type>
+									<outputDirectory>${basedir}</outputDirectory>
+									<includes>**/data/*.*</includes>
+									<excludes>**/META-INF/*.*</excludes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>spring-releases</id>
-			<url>https://repo.spring.io/libs-release</url>
-		</repository>
-	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-releases</id>
