@@ -147,8 +147,7 @@
 									<version>0.0.1-SNAPSHOT</version>
 									<type>jar</type>
 									<outputDirectory>${basedir}</outputDirectory>
-									<includes>**/models/*.*</includes>
-									<excludes>**/META-INF/*.*</excludes>
+									<excludes>**/META-INF/</excludes>
 								</artifactItem>
 								<artifactItem>
 									<groupId>br.cin.ufpe.nlp</groupId>
@@ -156,8 +155,7 @@
 									<version>0.0.1-SNAPSHOT</version>
 									<type>jar</type>
 									<outputDirectory>${basedir}</outputDirectory>
-									<includes>**/data/*.*</includes>
-									<excludes>**/META-INF/*.*</excludes>
+									<excludes>**/META-INF/</excludes>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
